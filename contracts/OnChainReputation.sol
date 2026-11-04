@@ -32,13 +32,14 @@ contract OnChainReputation is ReentrancyGuard, Ownable {
     mapping(address => mapping(address => bool)) public ratingGiven;
     uint256 public profileCount;
     uint256 public ratingCount;
+    mapping(address=>uint256) public ratingSum;
 
     event ProfileCreated(address indexed user, uint256 initialScore);
     event RatingGiven(address indexed rater, address indexed rated, uint256 score);
     event RatingUpdated(address indexed rater, address indexed rated, uint256 oldScore, uint256 newScore);
 
     function createProfile(uint256 initialScore) external nonReentrant {
-        require(initialScore <= 100, "Score max 100");
+        require(initialScore == 0, "New profiles start at zero");
         require(!profiles[msg.sender].active, "Profile exists");
         Profile storage p = profiles[msg.sender];
         p.user = msg.sender;
@@ -59,7 +60,8 @@ contract OnChainReputation is ReentrancyGuard, Ownable {
         Profile storage p = profiles[ratedUser];
         // FIX: division is by (totalRatings + 1), never zero; score stays in [0, 100].
         uint256 oldScore = p.score;
-        p.score = (p.score * p.totalRatings + score) / (p.totalRatings + 1);
+        ratingSum[ratedUser] += score;
+        p.score = ratingSum[ratedUser] / (p.totalRatings + 1);
         p.totalRatings += 1;
         emit RatingGiven(msg.sender, ratedUser, score);
         emit RatingUpdated(msg.sender, ratedUser, oldScore, p.score);
