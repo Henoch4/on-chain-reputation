@@ -1,9 +1,9 @@
 {
-  "abiSource": "pending-current-source",
+  "abiSource": "runtime-matched-current-source",
   "repo": "standing",
   "brand": "STANDING",
   "summary": "Create a profile, rate another address, and read on-chain reputation.",
-  "address": null,
+  "address": "0xD1818eFc5E548E547524e693e4569AFc56c06150",
   "owner": null,
   "abi": [
     {

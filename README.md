@@ -4,7 +4,7 @@ Create a profile, rate another address, and read on-chain reputation.
 
 ## Mainnet status
 
-Mainnet deployment is pending. The interface does not simulate transactions or balances.
+Contract on BOT Chain mainnet (677): [0xD1818eFc5E548E547524e693e4569AFc56c06150](https://scan.botchain.ai/address/0xD1818eFc5E548E547524e693e4569AFc56c06150).
 
 Wallet actions require BOT Chain mainnet, deployed bytecode, and a connected compatible wallet. Every action is simulated before a transaction review; only a subsequent wallet confirmation can send it.
 
@@ -19,7 +19,7 @@ Wallet actions require BOT Chain mainnet, deployed bytecode, and a connected com
 
 ## Contract interface
 
-`frontend/product.json` uses the ABI compiled from the current Solidity source.
+`frontend/product.json` uses the current-source ABI, matched against the deployed mainnet runtime bytecode. Explorer source publication is tracked separately.
 
 | Action | Contract signature |
 |---|---|
@@ -48,3 +48,7 @@ The test requires Chromium or Edge. Windows defaults to the standard Edge instal
 ## Deployment and assessment
 
 Update `frontend/product.json` only after confirming the new contract's network, bytecode and ABI. Do not substitute placeholder addresses or remove truthful limitations. Operator-wallet testing proves technical activity, not independent users. Official social accounts, launch posts, independent users and continuous operation require separate evidence.
+
+## Counter limitation
+
+This deployed version does not update the global `ratingCount()` getter. The interface omits that statistic and exposes the maintained `totalRatings` value through each profile lookup. Profile ratings and score calculation remain usable.
